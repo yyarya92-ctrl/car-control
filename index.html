@@ -1,3 +1,4 @@
+Html
 <!DOCTYPE html>
 <html lang="fa">
 <head>
@@ -8,12 +9,11 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
   html, body {
-    width: 100vw; height: 100vh;
-    background: #050810;
+    width: 100vw; height: 100vh; height: 100dvh;
+    background: #050810; color: #fff;
     font-family: Tahoma, sans-serif;
     overflow: hidden;
     display: flex; align-items: center; justify-content: center;
-    color: #fff;
     touch-action: none;
   }
   #rotateMsg {
@@ -28,119 +28,119 @@
   }
 
   #panel {
-    width: 98vw; height: 96vh;
+    width: 99vw; height: 98vh; height: 98dvh;
     max-width: 1400px;
     background: radial-gradient(ellipse at center, #0a1420 0%, #020408 100%);
     border: 2px solid #1a3050;
-    border-radius: 18px;
-    padding: 12px;
-    display: grid;
-    grid-template-columns: 1.3fr 1.1fr 1.3fr;
-    grid-template-rows: auto 1fr;
-    gap: 10px;
+    border-radius: 14px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
     box-shadow: 0 0 40px rgba(0,150,255,0.15), inset 0 0 60px rgba(0,0,0,0.9);
-    position: relative;
   }
 
-  /* ============ STATUS BAR ============ */
-  #status {
-    position: absolute;
-    top: -22px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 11px;
-    color: #8ab8e0;
-    background: #05101a;
-    padding: 3px 12px;
-    border-radius: 0 0 8px 8px;
+  /* ===== نوار وضعیت ===== */
+  #statusBar {
+    display: flex; align-items: center; justify-content: center;
+    height: 22px;
+    font-size: 12px;
+    border-radius: 6px;
+    background: rgba(0,20,40,0.6);
     border: 1px solid #1a3050;
-    border-top: none;
+    color: #8ab8e0;
+    transition: all 0.3s;
   }
-  #status.online { color: #4ade80; }
-  #status.offline { color: #ff4040; }
+  #statusBar.online  { color: #4ade80; border-color: #1a6040; background: rgba(0,40,20,0.5); }
+  #statusBar.offline { color: #ff5050; border-color: #602020; background: rgba(40,0,0,0.5); }
+  #statusBar::before { content: '⚪ '; margin-left: 5px; }
+  #statusBar.online::before  { content: '🟢 '; }
+  #statusBar.offline::before { content: '🔴 '; }
 
-  /* ============ 360 SPIN ============ */
+  /* ===== بدنه اصلی ===== */
+  #mainRow {
+    flex: 1;
+    display: flex;
+    gap: 6px;
+    min-height: 0;
+  }
+
+  /* ===== ستون چپ ===== */
+  #leftCol {
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+
   #spinBox {
-    grid-column: 1; grid-row: 1;
     display: flex; align-items: center; justify-content: space-between;
     background: rgba(0,20,40,0.6);
     border: 2px solid #1a4a80;
-    border-radius: 12px;
-    padding: 5px 10px;
-    box-shadow: inset 0 0 20px rgba(0,120,255,0.2);
+    border-radius: 10px;
+    padding: 3px 8px;
+    height: 46px;
   }
   .spinArrow {
-    width: 40px; height: 40px;
+    width: 36px; height: 36px;
     border-radius: 50%;
     background: radial-gradient(circle, #0060c0, #003070);
     border: 2px solid #2a90ff;
     display: flex; align-items: center; justify-content: center;
-    font-size: 20px; font-weight: bold;
-    box-shadow: 0 0 15px rgba(0,150,255,0.6);
+    font-size: 18px; font-weight: bold;
+    box-shadow: 0 0 12px rgba(0,150,255,0.6);
     cursor: pointer;
-    transition: all 0.1s;
   }
-  .spinArrow:active, .spinArrow.active {
+  .spinArrow.active {
     background: radial-gradient(circle, #ff9020, #b35a00);
     border-color: #f39c12;
-    box-shadow: 0 0 25px rgba(243,156,18,0.9);
-    transform: scale(0.95);
+    box-shadow: 0 0 22px rgba(243,156,18,0.9);
   }
   #spinLabel {
-    flex: 1;
-    text-align: center;
-    font-size: 22px; font-weight: bold;
+    flex: 1; text-align: center;
+    font-size: 18px; font-weight: bold;
     color: #4ab8ff;
-    text-shadow: 0 0 12px rgba(74,184,255,0.8);
-    position: relative;
+    text-shadow: 0 0 10px rgba(74,184,255,0.8);
   }
-  #spinLabel::before {
-    content: '↻';
-    font-size: 18px; color: #2a90ff;
-    margin-left: 8px;
-    display: inline-block;
-    animation: spin 2s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ============ WHEEL ============ */
   #wheelZone {
-    grid-column: 1; grid-row: 2;
+    flex: 1;
     display: flex; align-items: center; justify-content: center;
-    position: relative;
+    min-height: 0;
   }
   #wheel {
-    width: 90%; max-width: 380px;
+    width: auto; height: 100%;
     aspect-ratio: 1/1;
+    max-width: 100%;
     border-radius: 50%;
     background: radial-gradient(circle at 50% 45%, #2a2a2a 0%, #111 75%, #000 100%);
-    border: 26px solid #1a1a1a;
-    box-shadow: 0 0 0 3px #2a90ff, inset 0 0 40px rgba(0,0,0,0.95), 0 0 40px rgba(0,100,200,0.3);
+    border: 22px solid #1a1a1a;
+    box-shadow: 0 0 0 2px #2a90ff, inset 0 0 30px rgba(0,0,0,0.95), 0 0 30px rgba(0,100,200,0.3);
     position: relative;
     cursor: grab;
     touch-action: none;
-    transition: transform 0.05s;
   }
   #wheel.dragging { cursor: grabbing; }
   #wheel::before {
     content: '';
     position: absolute;
-    bottom: 12px; left: 50%;
+    bottom: 10px; left: 50%;
     width: 38%; height: 22%;
     transform: translateX(-50%);
     background: linear-gradient(145deg, #e8e8e8, #888 50%, #ccc);
     clip-path: polygon(20% 0%, 80% 0%, 65% 100%, 35% 100%);
     border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.7);
   }
   #wheel::after {
     content: '';
     position: absolute;
     top: -2px; left: 50%;
-    width: 6px; height: 34px;
+    width: 5px; height: 28px;
     background: #2a90ff;
     transform: translateX(-50%);
     border-radius: 3px;
-    box-shadow: 0 0 12px #2a90ff;
+    box-shadow: 0 0 10px #2a90ff;
   }
   #hub {
     position: absolute; top: 50%; left: 50%;
@@ -148,88 +148,119 @@
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background: radial-gradient(circle, #3a3a3a, #0a0a0a);
-    border: 3px solid #2a90ff;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; color: #4ab8ff;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.9), 0 0 20px rgba(42,144,255,0.5);
-  }
-  #steerValue {
-    position: absolute;
-    bottom: 8px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 13px;
-    color: #4ab8ff;
-    background: rgba(0,0,0,0.6);
-    padding: 3px 10px;
-    border-radius: 6px;
-    pointer-events: none;
-  }
-
-  /* ============ MIDDLE COLUMN ============ */
-  #middleCol {
-    grid-column: 2; grid-row: 1 / 3;
+    border: 2px solid #2a90ff;
     display: flex; flex-direction: column;
-    gap: 8px;
+    align-items: center; justify-content: center;
+    font-size: 10px; color: #4ab8ff;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
   }
-  .rectBtn {
+  #steerValue { font-size: 12px; font-weight: bold; color: #4ab8ff; }
+
+  /* ===== ۴ دکمه مربع زیر فرمون ===== */
+  #btnRow {
+    display: flex;
+    gap: 5px;
+    height: 58px;
+  }
+  .sqBtn {
     flex: 1;
-    min-height: 55px;
     background: linear-gradient(180deg, #0a1a2a, #05101a);
     border: 2px solid #1a4a80;
     border-radius: 10px;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    font-size: 13px;
+    font-size: 10px;
     color: #cce6ff;
     cursor: pointer;
-    position: relative;
-    box-shadow: inset 0 0 15px rgba(0,80,160,0.3);
-    transition: all 0.15s;
+    box-shadow: inset 0 0 10px rgba(0,80,160,0.3);
+    transition: all 0.1s;
+    padding: 2px;
   }
-  .rectBtn:active { transform: scale(0.97); }
-  .rectBtn.active {
-    background: linear-gradient(180deg, #0a2a4a, #0a1a30);
+  .sqBtn .ic { font-size: 20px; line-height: 1; margin-bottom: 1px; }
+  .sqBtn.active {
     border-color: #2a90ff;
-    box-shadow: 0 0 20px rgba(42,144,255,0.8), inset 0 0 20px rgba(42,144,255,0.3);
+    box-shadow: 0 0 18px rgba(42,144,255,0.8), inset 0 0 15px rgba(42,144,255,0.3);
+    background: linear-gradient(180deg, #0a2a4a, #0a1a30);
   }
-  .rectBtn .icon { font-size: 20px; margin-bottom: 2px; line-height: 1; }
-  .rectBtn.light .icon { color: #fff; }
-  .rectBtn.emod .icon { color: #4ade80; }
-  .rectBtn.emod.active { border-color: #4ade80; box-shadow: 0 0 20px rgba(74,222,128,0.8); }
-  .rectBtn.smoke .icon { color: #a0a0a0; }
-  .rectBtn.horn .icon { color: #ffcc00; }
-  .rectBtn.horn.active { border-color: #ffcc00; box-shadow: 0 0 20px rgba(255,204,0,0.8); }
-  .rectBtn.bt .icon { color: #2a90ff; }
+  .sqBtn.emod.active { border-color: #4ade80; box-shadow: 0 0 18px rgba(74,222,128,0.8); }
+  .sqBtn.horn.active { border-color: #ffcc00; box-shadow: 0 0 18px rgba(255,204,0,0.8); }
 
-  /* ============ RIGHT COLUMN ============ */
+  /* ===== ستون وسط: وینچ ===== */
+  #midCol {
+    flex: 2.2;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  #winchBox {
+    flex: 1;
+    background: rgba(0,20,40,0.6);
+    border: 2px solid #1a4a80;
+    border-radius: 12px;
+    padding: 6px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: space-between;
+    box-shadow: inset 0 0 20px rgba(0,80,160,0.15);
+  }
+  #winchTitle {
+    font-size: 12px; color: #4ab8ff; font-weight: bold;
+    letter-spacing: 1px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  #winchArrows {
+    display: flex; flex-direction: column; gap: 8px;
+    align-items: center; justify-content: center;
+    flex: 1; width: 100%;
+    padding: 4px 0;
+  }
+  .winchBtn {
+    width: 100%;
+    max-width: 110px;
+    height: 55px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #0a2a4a, #051020);
+    border: 2px solid #2a90ff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; color: #4ab8ff;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(42,144,255,0.5);
+    transition: all 0.1s;
+  }
+  .winchBtn.active {
+    background: linear-gradient(180deg, #1a4a80, #0a2a4a);
+    box-shadow: 0 0 25px rgba(42,144,255,0.9);
+    transform: scale(0.96);
+  }
+  #winchLabel { font-size: 11px; color: #4ab8ff; letter-spacing: 1px; }
+
+  /* ===== ستون راست ===== */
   #rightCol {
-    grid-column: 3; grid-row: 1 / 3;
-    display: flex; flex-direction: column;
-    gap: 8px;
+    flex: 3.2;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
   }
 
-  /* Speed bars */
   .speedBar {
     background: rgba(0,20,40,0.6);
     border: 2px solid #1a4a80;
     border-radius: 10px;
-    padding: 6px 10px;
-    position: relative;
+    padding: 5px 9px;
   }
   .speedBar .label {
-    font-size: 11px;
-    color: #8ab8e0;
-    margin-bottom: 4px;
+    font-size: 11px; color: #8ab8e0;
+    margin-bottom: 3px;
     display: flex; justify-content: space-between;
   }
   .barTrack {
-    height: 18px;
+    height: 22px;
     background: #05101a;
     border-radius: 5px;
     border: 1px solid #1a3050;
     overflow: hidden;
     position: relative;
-    cursor: pointer;
     touch-action: none;
   }
   .barFill {
@@ -238,87 +269,52 @@
     width: 0%;
     pointer-events: none;
   }
-  .barFill.rear { background: linear-gradient(90deg, #0060c0, #2a90ff); box-shadow: 0 0 12px #2a90ff; }
+  .barFill.rear  { background: linear-gradient(90deg, #0060c0, #2a90ff); box-shadow: 0 0 12px #2a90ff; }
   .barFill.front { background: linear-gradient(90deg, #008040, #2aff80); box-shadow: 0 0 12px #2aff80; }
   .barPercent { font-weight: bold; color: #cce6ff; font-size: 12px; }
   .barPercent.green { color: #2aff80; }
 
-  /* Gear buttons */
+  /* ===== دکمه‌های جلو/عقب (بزرگ، لحظه‌ای) ===== */
   #gearBox {
-    display: flex; gap: 6px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 0;
   }
   .gearBtn {
     flex: 1;
-    padding: 10px 4px;
-    border-radius: 10px;
+    border-radius: 12px;
     background: linear-gradient(180deg, #0a1a2a, #05101a);
     border: 2px solid #1a4a80;
     color: #8ab8e0;
-    font-size: 13px;
+    font-size: 18px;
     font-weight: bold;
-    cursor: pointer;
-    touch-action: manipulation;
-    transition: all 0.15s;
-  }
-  .gearBtn.active.forward { background: #0a3a20; border-color: #2aff80; color: #2aff80; box-shadow: 0 0 15px rgba(42,255,128,0.6); }
-  .gearBtn.active.reverse { background: #3a0a0a; border-color: #ff4040; color: #ff4040; box-shadow: 0 0 15px rgba(255,64,64,0.6); }
-
-  /* Winch */
-  #winchBox {
-    background: rgba(0,20,40,0.6);
-    border: 2px solid #1a4a80;
-    border-radius: 12px;
-    padding: 8px;
-    display: flex; flex-direction: column; align-items: center; gap: 6px;
-  }
-  #winchBox .title { font-size: 11px; color: #8ab8e0; letter-spacing: 1px; }
-  #winchArrows {
-    display: flex; gap: 14px; width: 100%;
-    align-items: center; justify-content: center;
-  }
-  .winchBtn {
-    width: 54px; height: 54px;
-    border-radius: 12px;
-    background: linear-gradient(180deg, #0a2a4a, #051020);
-    border: 2px solid #2a90ff;
     display: flex; align-items: center; justify-content: center;
-    font-size: 26px; color: #4ab8ff;
     cursor: pointer;
-    box-shadow: 0 0 12px rgba(42,144,255,0.5);
     transition: all 0.1s;
     touch-action: none;
   }
-  .winchBtn:active, .winchBtn.active {
-    background: linear-gradient(180deg, #1a4a80, #0a2a4a);
-    box-shadow: 0 0 25px rgba(42,144,255,0.9);
-    transform: scale(0.95);
-  }
-  #winchLabel { font-size: 12px; color: #4ab8ff; font-weight: bold; letter-spacing: 1px; }
+  .gearBtn.active.fwd { background: #0a3a20; border-color: #2aff80; color: #2aff80; box-shadow: 0 0 22px rgba(42,255,128,0.7); }
+  .gearBtn.active.rev { background: #3a0a0a; border-color: #ff4040; color: #ff4040; box-shadow: 0 0 22px rgba(255,64,64,0.7); }
 
-  /* Sensor info */
-  #sensors {
-    background: rgba(0,20,40,0.6);
-    border: 2px solid #1a4a80;
+  /* بلوتوث تو ستون راست، بالا */
+  #btBtn {
+    height: 42px;
     border-radius: 10px;
-    padding: 6px 10px;
-    font-size: 11px;
-    color: #8ab8e0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3px 10px;
+    background: linear-gradient(180deg, #0a1a2a, #05101a);
+    border: 2px solid #1a4a80;
+    color: #cce6ff;
+    font-size: 13px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    cursor: pointer;
+    transition: all 0.1s;
   }
-  #sensors span { color: #cce6ff; font-weight: bold; }
-
-  /* corners */
-  .corner {
-    position: absolute;
-    width: 18px; height: 18px;
-    border: 2px solid #2a90ff;
+  #btBtn.active {
+    border-color: #2a90ff;
+    box-shadow: 0 0 18px rgba(42,144,255,0.8);
+    background: linear-gradient(180deg, #0a2a4a, #0a1a30);
   }
-  .corner.tl { top: 5px; left: 5px; border-right: none; border-bottom: none; border-radius: 8px 0 0 0; }
-  .corner.tr { top: 5px; right: 5px; border-left: none; border-bottom: none; border-radius: 0 8px 0 0; }
-  .corner.bl { bottom: 5px; left: 5px; border-right: none; border-top: none; border-radius: 0 0 0 8px; }
-  .corner.br { bottom: 5px; right: 5px; border-left: none; border-top: none; border-radius: 0 0 8px 0; }
 </style>
 </head>
 <body>
@@ -326,66 +322,91 @@
 <div id="rotateMsg">📱 لطفاً گوشی رو افقی بگیرید</div>
 
 <div id="panel">
-  <div id="status">در حال اتصال...</div>
-  <div class="corner tl"></div><div class="corner tr"></div>
-  <div class="corner bl"></div><div class="corner br"></div>
+  <div id="statusBar">در حال اتصال...</div>
 
-  <!-- 360 spin -->
-  <div id="spinBox">
-    <div class="spinArrow" data-tank="-1">◀</div>
-    <div id="spinLabel">360°</div>
-    <div class="spinArrow" data-tank="1">▶</div>
-  </div>
+  <div id="mainRow">
 
-  <!-- Wheel -->
-  <div id="wheelZone">
-    <div id="wheel">
-      <div id="hub">STEER</div>
-      <div id="steerValue">90°</div>
-    </div>
-  </div>
-
-  <!-- Middle buttons -->
-  <div id="middleCol">
-    <div class="rectBtn light" data-cmd="light"><div class="icon">≡D</div><div>light</div></div>
-    <div class="rectBtn emod"  data-cmd="emod"><div class="icon">/|\</div><div>E mod</div></div>
-    <div class="rectBtn bt"    data-cmd="bluetooth"><div class="icon">☰</div><div>Bluetooth</div></div>
-    <div class="rectBtn smoke" data-cmd="smoke"><div class="icon">💨</div><div>smoke</div></div>
-    <div class="rectBtn horn"  data-cmd="horn"><div class="icon">📢</div><div>horn</div></div>
-  </div>
-
-  <!-- Right column -->
-  <div id="rightCol">
-
-    <div class="speedBar">
-      <div class="label"><span>Rear Motors (Boehler)</span><span class="barPercent" id="pctRear">0%</span></div>
-      <div class="barTrack" data-motor="rear"><div class="barFill rear" id="barRear"></div></div>
-    </div>
-
-    <div class="speedBar">
-      <div class="label"><span>Front Motors</span><span class="barPercent green" id="pctFront">0%</span></div>
-      <div class="barTrack" data-motor="front"><div class="barFill front" id="barFront"></div></div>
-    </div>
-
-    <div id="gearBox">
-      <button class="gearBtn forward active" id="btnForward">جلو ▲</button>
-      <button class="gearBtn reverse" id="btnReverse">عقب ▼</button>
-    </div>
-
-    <div id="winchBox">
-      <div class="title">🪝 WINCH</div>
-      <div id="winchArrows">
-        <div class="winchBtn" data-winch="1">▲</div>
-        <div class="winchBtn" data-winch="-1">▼</div>
+    <!-- ستون چپ -->
+    <div id="leftCol">
+      <div id="spinBox">
+        <div class="spinArrow" data-tank="-1">◀</div>
+        <div id="spinLabel">360°</div>
+        <div class="spinArrow" data-tank="1">▶</div>
       </div>
-      <div id="winchLabel">توقف</div>
+
+      <div id="wheelZone">
+        <div id="wheel">
+          <div id="hub">
+            <div>STEER</div>
+            <div id="steerValue">90°</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="btnRow">
+        <div class="sqBtn" data-toggle="light">
+          <div class="ic">≡D</div>
+          <div>light</div>
+        </div>
+        <div class="sqBtn emod" data-toggle="emod">
+          <div class="ic">/|\</div>
+          <div>E mod</div>
+        </div>
+        <div class="sqBtn" data-toggle="smoke">
+          <div class="ic">💨</div>
+          <div>smoke</div>
+        </div>
+        <div class="sqBtn horn" data-momentary="horn">
+          <div class="ic">📢</div>
+          <div>horn</div>
+        </div>
+      </div>
     </div>
 
-    <div id="sensors">
-      <div>جلو: <span id="sFront">-</span> cm</div>
-      <div>عقب: <span id="sRear">-</span> cm</div>
-      <div>IR L: <span id="sIrl">-</span></div>
-      <div>IR R: <span id="sIrr">-</span></div>
+    <!-- ستون وسط: وینچ -->
+    <div id="midCol">
+      <div id="winchBox">
+        <div id="winchTitle">🪝 WINCH</div>
+        <div id="winchArrows">
+          <div class="winchBtn" data-winch="1">▲</div>
+          <div class="winchBtn" data-winch="-1">▼</div>
+        </div>
+        <div id="winchLabel">توقف</div>
+      </div>
+    </div>
+
+    <!-- ستون راست -->
+    <div id="rightCol">
+
+      <div class="speedBar">
+        <div class="label">
+          <span>Rear Motors</span>
+          <span class="barPercent" id="pctRear">0%</span>
+        </div>
+        <div class="barTrack" data-motor="rear">
+          <div class="barFill rear" id="barRear"></div>
+        </div>
+      </div>
+
+      <div class="speedBar">
+        <div class="label">
+          <span>Front Motors</span>
+          <span class="barPercent green" id="pctFront">0%</span>
+        </div>
+        <div class="barTrack" data-motor="front">
+          <div class="barFill front" id="barFront"></div>
+        </div>
+      </div>
+
+      <div id="gearBox">
+        <div class="gearBtn fwd" id="btnForward">جلو ▲</div>
+        <div class="gearBtn rev" id="btnReverse">عقب ▼</div>
+      </div>
+
+      <div id="btBtn" data-toggle="bluetooth">
+        <span>☰</span><span>Bluetooth</span>
+      </div>
+
     </div>
 
   </div>
@@ -399,7 +420,7 @@ const MQTT_PASS = "09330572413";
 
 let client = null;
 let connected = false;
-const statusEl = document.getElementById('status');
+const statusEl = document.getElementById('statusBar');
 
 function initMqtt() {
   statusEl.textContent = "در حال اتصال...";
@@ -416,32 +437,28 @@ function initMqtt() {
 
   client.on('connect', () => {
     connected = true;
-    statusEl.textContent = "🟢 متصل";
+    statusEl.textContent = "متصل به سرور";
     statusEl.className = "online";
     client.subscribe('car/status/#');
   });
 
   client.on('reconnect', () => {
-    statusEl.textContent = "در حال اتصال...";
+    statusEl.textContent = "در حال اتصال مجدد...";
     statusEl.className = "";
   });
 
   client.on('close', () => {
     connected = false;
-    statusEl.textContent = "🔴 قطع";
+    statusEl.textContent = "قطع شد - تلاش مجدد...";
     statusEl.className = "offline";
   });
 
-  client.on('error', (e) => {
-    console.error('MQTT error:', e);
-  });
+  client.on('error', (e) => { console.error('MQTT error:', e); });
 
   client.on('message', (topic, payload) => {
     const v = payload.toString();
     if (topic === 'car/status/front') document.getElementById('sFront').textContent = v;
     if (topic === 'car/status/rear')  document.getElementById('sRear').textContent  = v;
-    if (topic === 'car/status/irL')   document.getElementById('sIrl').textContent   = v;
-    if (topic === 'car/status/irR')   document.getElementById('sIrr').textContent   = v;
   });
 }
 
@@ -456,23 +473,20 @@ initMqtt();
 const wheel = document.getElementById('wheel');
 const steerValueEl = document.getElementById('steerValue');
 
-let wheelAngle = 0;          // زاویه چرخش نمایشی (-180..180)
+let wheelAngle = 0;
 let lastSentSteer = -1;
-let dragging = false;
-let centerX, centerY, startAngle;
+let centerX = 0, centerY = 0, startAngle = 0;
 
-function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
 function getCenter() {
   const r = wheel.getBoundingClientRect();
   centerX = r.left + r.width / 2;
   centerY = r.top + r.height / 2;
 }
-
 function angleFromPoint(x, y) {
   return Math.atan2(y - centerY, x - centerX) * 180 / Math.PI;
 }
-
 function sendSteer(angle) {
   angle = Math.round(angle);
   if (angle === lastSentSteer) return;
@@ -480,35 +494,23 @@ function sendSteer(angle) {
   pub('car/steer', angle);
   steerValueEl.textContent = angle + '°';
 }
-
 function wheelStart(x, y) {
-  dragging = true;
-  wheel.classList.add('dragging');
   getCenter();
   startAngle = angleFromPoint(x, y) - wheelAngle;
+  wheel.classList.add('dragging');
 }
-
 function wheelMove(x, y) {
-  if (!dragging) return;
   let raw = angleFromPoint(x, y) - startAngle;
   while (raw - wheelAngle > 180) raw -= 360;
   while (raw - wheelAngle < -180) raw += 360;
   raw = clamp(raw, -180, 180);
   wheelAngle = raw;
   wheel.style.transform = `rotate(${wheelAngle}deg)`;
-  // نسبت ۲ به ۱ (چرخش فرمون ۱۸۰ درجه → سروو ۹۰ درجه)
   const servo = clamp(90 + wheelAngle / 2, 0, 180);
   sendSteer(servo);
 }
-
-function wheelEnd() {
-  if (!dragging) return;
-  dragging = false;
-  wheel.classList.remove('dragging');
-  returnToCenter();
-}
-
 function returnToCenter() {
+  wheel.classList.remove('dragging');
   const step = () => {
     if (Math.abs(wheelAngle) < 1) {
       wheelAngle = 0;
@@ -518,8 +520,7 @@ function returnToCenter() {
     }
     wheelAngle *= 0.85;
     wheel.style.transform = `rotate(${wheelAngle}deg)`;
-    const servo = clamp(90 + wheelAngle / 2, 0, 180);
-    sendSteer(servo);
+    sendSteer(clamp(90 + wheelAngle / 2, 0, 180));
     requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
@@ -527,6 +528,7 @@ function returnToCenter() {
 
 let wheelTouchId = null;
 
+// START on the wheel element
 wheel.addEventListener('touchstart', e => {
   e.preventDefault();
   if (wheelTouchId !== null) return;
@@ -535,7 +537,8 @@ wheel.addEventListener('touchstart', e => {
   wheelStart(t.clientX, t.clientY);
 }, { passive: false });
 
-wheel.addEventListener('touchmove', e => {
+// MOVE / END on window (critical fix!)
+window.addEventListener('touchmove', e => {
   if (wheelTouchId === null) return;
   for (const t of e.changedTouches) {
     if (t.identifier === wheelTouchId) {
@@ -546,25 +549,36 @@ wheel.addEventListener('touchmove', e => {
   }
 }, { passive: false });
 
-wheel.addEventListener('touchend', e => {
+window.addEventListener('touchend', e => {
+  if (wheelTouchId === null) return;
   for (const t of e.changedTouches) {
     if (t.identifier === wheelTouchId) {
-      e.preventDefault();
       wheelTouchId = null;
-      wheelEnd();
+      returnToCenter();
       break;
     }
   }
-}, { passive: false });
+});
+window.addEventListener('touchcancel', e => {
+  if (wheelTouchId === null) return;
+  for (const t of e.changedTouches) {
+    if (t.identifier === wheelTouchId) {
+      wheelTouchId = null;
+      returnToCenter();
+      break;
+    }
+  }
+});
 
-wheel.addEventListener('mousedown', e => { wheelStart(e.clientX, e.clientY); });
-window.addEventListener('mousemove', e => { if (dragging) wheelMove(e.clientX, e.clientY); });
-window.addEventListener('mouseup', () => { if (dragging) wheelEnd(); });
+// mouse support
+let mouseDragging = false;
+wheel.addEventListener('mousedown', e => { e.preventDefault(); mouseDragging = true; wheelStart(e.clientX, e.clientY); });
+window.addEventListener('mousemove', e => { if (mouseDragging) wheelMove(e.clientX, e.clientY); });
+window.addEventListener('mouseup', () => { if (mouseDragging) { mouseDragging = false; returnToCenter(); } });
 
-// ================= SPEED BARS (Drag to set) =================
+// ================= SPEED BARS =================
 function setupBar(el, motorName, pctEl, fillEl) {
   let touchId = null;
-  let dragging = false;
 
   function setFromX(clientX) {
     const r = el.getBoundingClientRect();
@@ -580,12 +594,11 @@ function setupBar(el, motorName, pctEl, fillEl) {
     e.preventDefault();
     if (touchId !== null) return;
     touchId = e.changedTouches[0].identifier;
-    dragging = true;
     setFromX(e.changedTouches[0].clientX);
   }, { passive: false });
 
   el.addEventListener('touchmove', e => {
-    if (!dragging) return;
+    if (touchId === null) return;
     for (const t of e.changedTouches) {
       if (t.identifier === touchId) {
         e.preventDefault();
@@ -597,17 +610,12 @@ function setupBar(el, motorName, pctEl, fillEl) {
 
   el.addEventListener('touchend', e => {
     for (const t of e.changedTouches) {
-      if (t.identifier === touchId) {
-        dragging = false;
-        touchId = null;
-        break;
-      }
+      if (t.identifier === touchId) { touchId = null; break; }
     }
   }, { passive: false });
 
-  el.addEventListener('mousedown', e => { dragging = true; setFromX(e.clientX); });
-  window.addEventListener('mousemove', e => { if (dragging && touchId === null) setFromX(e.clientX); });
-  window.addEventListener('mouseup', () => { dragging = false; });
+  el.addEventListener('mousedown', e => { setFromX(e.clientX); });
+  el.addEventListener('mousemove', e => { if (e.buttons === 1) setFromX(e.clientX); });
 }
 
 setupBar(
@@ -623,45 +631,147 @@ setupBar(
   document.getElementById('barFront')
 );
 
-// ================= GEAR =================
+// ================= GEAR (Momentary) =================
 const btnForward = document.getElementById('btnForward');
 const btnReverse = document.getElementById('btnReverse');
 
-btnForward.addEventListener('click', () => {
-  btnForward.classList.add('active');
-  btnReverse.classList.remove('active');
-  pub('car/gear', 1);
-});
-btnReverse.addEventListener('click', () => {
-  btnReverse.classList.add('active');
-  btnForward.classList.remove('active');
-  pub('car/gear', -1);
-});
+function bindMomentary(el, onStart, onEnd) {
+  let touchId = null;
 
-// ================= TANK (360) =================
+  el.addEventListener('touchstart', e => {
+    e.preventDefault();
+    if (touchId !== null) return;
+    touchId = e.changedTouches[0].identifier;
+    onStart();
+  }, { passive: false });
+
+  el.addEventListener('touchend', e => {
+    for (const t of e.changedTouches) {
+      if (t.identifier === touchId) {
+        touchId = null;
+        onEnd();
+        break;
+      }
+    }
+  }, { passive: false });
+  el.addEventListener('touchcancel', e => {
+    if (touchId !== null) { touchId = null; onEnd(); }
+  });
+
+  el.addEventListener('mousedown', e => { e.preventDefault(); onStart(); });
+  window.addEventListener('mouseup', () => { onEnd(); });
+}
+
+bindMomentary(btnForward,
+  () => { btnForward.classList.add('active'); pub('car/gear', 1); },
+  () => { btnForward.classList.remove('active'); pub('car/gear', 0); }
+);
+bindMomentary(btnReverse,
+  () => { btnReverse.classList.add('active'); pub('car/gear', -1); },
+  () => { btnReverse.classList.remove('active'); pub('car/gear', 0); }
+);
+
+// ================= TANK (Momentary) =================
 document.querySelectorAll('.spinArrow').forEach(btn => {
   const dir = parseInt(btn.dataset.tank);
-  let active = false;
+  let touchId = null;
 
-  function start(e) {
+  btn.addEventListener('touchstart', e => {
     e.preventDefault();
-    if (active) return;
-    active = true;
+    if (touchId !== null) return;
+    touchId = e.changedTouches[0].identifier;
     btn.classList.add('active');
     pub('car/tank', dir);
-  }
-  function end(e) {
-    if (!active) return;
-    active = false;
-    btn.classList.remove('active');
-    pub('car/tank', 0);
-  }
+  }, { passive: false });
 
-  btn.addEventListener('touchstart', start, { passive: false });
-  btn.addEventListener('touchend', end, { passive: false });
-  btn.addEventListener('touchcancel', end);
-  btn.addEventListener('mousedown', start);
-  window.addEventListener('mouseup', () => { if (active) end({preventDefault:()=>{}}); });
+  btn.addEventListener('touchend', e => {
+    for (const t of e.changedTouches) {
+      if (t.identifier === touchId) {
+        touchId = null;
+        btn.classList.remove('active');
+        pub('car/tank', 0);
+        break;
+      }
+    }
+  }, { passive: false });
+
+  btn.addEventListener('mousedown', e => { e.preventDefault(); btn.classList.add('active'); pub('car/tank', dir); });
+  window.addEventListener('mouseup', () => { if (btn.classList.contains('active')) { btn.classList.remove('active'); pub('car/tank', 0); } });
 });
 
-// ================= TOGGLE BUTTONS
+// ================= TOGGLE BUTTONS =================
+document.querySelectorAll('[data-toggle]').forEach(btn => {
+  const cmd = btn.dataset.toggle;
+  let state = 0;
+
+  btn.addEventListener('touchstart', e => { e.preventDefault(); toggle(); }, { passive: false });
+  btn.addEventListener('click', toggle);
+
+  function toggle() {
+    state = state ? 0 : 1;
+    btn.classList.toggle('active', state === 1);
+    pub('car/' + cmd, state);
+  }
+});
+
+// ================= MOMENTARY: horn =================
+document.querySelectorAll('[data-momentary]').forEach(btn => {
+  const cmd = btn.dataset.momentary;
+  let touchId = null;
+
+  btn.addEventListener('touchstart', e => {
+    e.preventDefault();
+    if (touchId !== null) return;
+    touchId = e.changedTouches[0].identifier;
+    btn.classList.add('active');
+    pub('car/' + cmd, 1);
+  }, { passive: false });
+
+  btn.addEventListener('touchend', e => {
+    for (const t of e.changedTouches) {
+      if (t.identifier === touchId) {
+        touchId = null;
+        btn.classList.remove('active');
+        pub('car/' + cmd, 0);
+        break;
+      }
+    }
+  }, { passive: false });
+
+  btn.addEventListener('mousedown', e => { e.preventDefault(); btn.classList.add('active'); pub('car/' + cmd, 1); });
+  window.addEventListener('mouseup', () => { if (btn.classList.contains('active')) { btn.classList.remove('active'); pub('car/' + cmd, 0); } });
+});
+
+// ================= WINCH =================
+document.querySelectorAll('.winchBtn').forEach(btn => {
+  const dir = parseInt(btn.dataset.winch);
+  const label = document.getElementById('winchLabel');
+  let touchId = null;
+
+  btn.addEventListener('touchstart', e => {
+    e.preventDefault();
+    if (touchId !== null) return;
+    touchId = e.changedTouches[0].identifier;
+    btn.classList.add('active');
+    label.textContent = dir === 1 ? 'جمع...' : 'باز...';
+    pub('car/winch', dir);
+  }, { passive: false });
+
+  btn.addEventListener('touchend', e => {
+    for (const t of e.changedTouches) {
+      if (t.identifier === touchId) {
+        touchId = null;
+        btn.classList.remove('active');
+        label.textContent = 'توقف';
+        pub('car/winch', 0);
+        break;
+      }
+    }
+  }, { passive: false });
+
+  btn.addEventListener('mousedown', e => { e.preventDefault(); btn.classList.add('active'); label.textContent = dir === 1 ? 'جمع...' : 'باز...'; pub('car/winch', dir); });
+  window.addEventListener('mouseup', () => { if (btn.classList.contains('active')) { btn.classList.remove('active'); label.textContent = 'توقف'; pub('car/winch', 0); } });
+});
+</script>
+</body>
+</html>
